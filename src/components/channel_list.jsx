@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
-import { selectChannel } from '../actions/index';
+import { selectChannel, fetchMessages } from '../actions/index';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class ChannelList extends Component {
@@ -11,22 +11,39 @@ class ChannelList extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(e) {
-    this.props.selectChannel(e.target.innerHtml);
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps.selectedChannel);
+    console.log(this.props.selectedChannel);
+    if (nextProps.selectedChannel !== this.props.selectedChannel) {
+      this.props.fetchMessages(nextProps.selectedChannel);
+    }
+  }
+
+  handleClick = (channel) => {
+    this.props.selectChannel(channel);
   }
 
   renderList = () => {
     this.props.channels.map((channel) => {
-      // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-      return <h3 key={channel} onClick={this.handleClick}>#{channel}</h3>;
+      console.log(channel);
+      return (
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+        <li
+          key={channel}
+          className={channel === this.props.selectedChannel ? 'active' : null}
+          onClick={() => this.handleClick(channel)}
+        >
+          #{channel}
+        </li>
+      );
     });
   }
 
   render() {
     return (
-      <div className="channels">
+      <ul className="channels">
         {this.renderList()}
-      </div>
+      </ul>
     );
   }
 }
@@ -39,9 +56,8 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ selectChannel }, dispatch);
+  return bindActionCreators({ selectChannel, fetchMessages }, dispatch);
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChannelList);
 
