@@ -23,6 +23,9 @@
   .active {
     font-weight: bold;
   }
+  li:hover {
+    cursor: pointer;
+  }
 }
 
 .input_msg_write input {

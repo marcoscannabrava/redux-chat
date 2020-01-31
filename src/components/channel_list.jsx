@@ -1,9 +1,9 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { selectChannel, fetchMessages } from '../actions/index';
 
-// eslint-disable-next-line react/prefer-stateless-function
 class ChannelList extends Component {
   constructor(props) {
     super(props);
@@ -12,8 +12,6 @@ class ChannelList extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps.selectedChannel);
-    console.log(this.props.selectedChannel);
     if (nextProps.selectedChannel !== this.props.selectedChannel) {
       this.props.fetchMessages(nextProps.selectedChannel);
     }
@@ -24,10 +22,8 @@ class ChannelList extends Component {
   }
 
   renderList = () => {
-    this.props.channels.map((channel) => {
-      console.log(channel);
+    return this.props.channels.map((channel) => {
       return (
-        // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
         <li
           key={channel}
           className={channel === this.props.selectedChannel ? 'active' : null}
