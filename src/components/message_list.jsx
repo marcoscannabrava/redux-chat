@@ -35,7 +35,7 @@ class MessageList extends Component {
   render() {
     return (
       <div className="selected-channel">
-        <h2>Channel #{this.props.selectedChannel}</h2>
+        <h2>#{this.props.selectedChannel}</h2>
         <div className="msg-list" ref={(list) => { this.list = list; }}>
           {this.renderList()}
         </div>

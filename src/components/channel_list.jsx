@@ -37,9 +37,12 @@ class ChannelList extends Component {
 
   render() {
     return (
-      <ul className="channels">
-        {this.renderList()}
-      </ul>
+      <div className="channels">
+        <h2>Channels</h2>
+        <ul>
+          {this.renderList()}
+        </ul>
+      </div>
     );
   }
 }
